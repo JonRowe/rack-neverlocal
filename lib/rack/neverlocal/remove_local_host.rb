@@ -1,5 +1,6 @@
 module Rack
   class NeverLocal
-    VERSION = "0.0.1"
+    module RemoveLocalHost
+    end
   end
 end

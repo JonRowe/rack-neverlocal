@@ -1,5 +1,5 @@
-[![Build Status](https://secure.travis-ci.org/JonRowe/rack-neverlocal.png)](http://travis-ci.org/JonRowe/rack-neverlocal)
 # Rack::NeverLocal
+[![Build Status](https://secure.travis-ci.org/JonRowe/rack-neverlocal.png)](http://travis-ci.org/JonRowe/rack-neverlocal) [![Code Climate](https://codeclimate.com/github/JonRowe/rack-neverlocal.png)](https://codeclimate.com/github/JonRowe/rack-neverlocal)
 
 Prevents Rails from considering requests as local. (It's a work around
 for a bug in older versions of Passenger with Rails)

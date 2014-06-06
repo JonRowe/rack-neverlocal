@@ -9,12 +9,14 @@ module Rack
 
         context "not a local ip" do
           let(:env) { { 'REMOTE_ADDR' => '192.168.1.1' } }
-          it { should == env }
+          it { is_expected.to eq env }
         end
 
         context "127.0.0.1" do
           let(:env) { { 'REMOTE_ADDR' => '127.0.0.1', 'HTTP_X_REAL_IP' => '192.168.1.1' } }
-          its(['REMOTE_ADDR']) { should_not == '127.0.0.1' }
+          it "sets remote addr to something else" do
+            expect(subject['REMOTE_ADDR']).to_not eq '127.0.0.1'
+          end
         end
 
       end
@@ -27,12 +29,12 @@ module Rack
 
           it "replaces remote addr with value" do
             subject
-            env['REMOTE_ADDR'].should == 'VALUE'
+            expect(env['REMOTE_ADDR']).to eq 'VALUE'
           end
         end
         context "key missing" do
           let(:env) { { 'NOT_KEY' => 'VALUE' } }
-          specify { should be_nil }
+          it { is_expected.to be_nil }
         end
       end
 
@@ -41,17 +43,17 @@ module Rack
 
         context "not a local ip" do
           let(:env) { { 'REMOTE_ADDR' => '192.168.1.1' } }
-          it { should be_false }
+          it { is_expected.to be false }
         end
 
         context "127.0.0.1" do
           let(:env) { { 'REMOTE_ADDR' => '127.0.0.1' } }
-          it { should be_true }
+          it { is_expected.to be true }
         end
 
         context "127.0.0.1" do
           let(:env) { { 'REMOTE_ADDR' => '::1' } }
-          it { should be_true }
+          it { is_expected.to be true }
         end
       end
     end

@@ -3,9 +3,9 @@ require 'spec_helper'
 module Rack
   describe NeverLocal do
     describe "is rack middleware" do
-      let(:app) { mock "app", :call => response }
+      let(:app) { double "app", :call => response }
 
-      let(:response) { mock "response" }
+      let(:response) { double "response" }
 
       let(:env)             { { 'REMOTE_ADDR' => 'LOCAL' } }
       let(:transformed_env) { { 'REMOTE_ADDR' => 'notlocal' } }
@@ -16,19 +16,19 @@ module Rack
         NeverLocal.new app
       end
 
-      subject { NeverLocal.new(app).call(env) }
+      subject(:call) { NeverLocal.new(app).call(env) }
 
       it "transforms the environment to strip out local addresses" do
-        NeverLocal::RemoveLocalHost.should_receive(:from).with(env).and_return(transformed_env)
-        subject
+        expect(NeverLocal::RemoveLocalHost).to receive(:from).with(env).and_return(transformed_env)
+        call
       end
 
       it "chains call onto app" do
-        app.should_receive(:call).with(transformed_env)
-        subject
+        expect(app).to receive(:call).with(transformed_env)
+        call
       end
 
-      it("outputs response") { should == response }
+      it("outputs response") { is_expected.to eq response }
 
     end
   end

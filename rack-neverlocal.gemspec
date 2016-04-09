@@ -16,7 +16,11 @@ Gem::Specification.new do |s|
   s.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
   s.require_paths = ["lib"]
 
-  s.add_development_dependency "rake"
+  if RUBY_VERSION.to_f >= 2
+    s.add_development_dependency "rake", '~> 11.0'
+  else
+    s.add_development_dependency "rake", '~> 10.0'
+  end
   s.add_development_dependency "rspec"
 
 end
